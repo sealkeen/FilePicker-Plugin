@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Plugin.FilePicker.Abstractions
 {
@@ -32,6 +33,11 @@ namespace Plugin.FilePicker.Abstractions
         /// Function to get a stream to the picked file.
         /// </summary>
         private readonly Func<Stream> _streamGetter;
+
+        /// <summary>
+        /// Returs multiple filenames if selected more than one
+        /// </summary>
+        public List<string> FileNames { get; set; }
 
         /// <summary>
         /// Creates a new and empty file data object
@@ -180,7 +186,7 @@ namespace Plugin.FilePicker.Abstractions
             }
 
             _isDisposed = true;
-            _dispose?.Invoke(disposing);
+            if(_dispose != null) _dispose.Invoke(disposing);
         }
 
         /// <summary>
