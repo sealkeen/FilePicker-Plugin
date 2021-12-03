@@ -61,6 +61,20 @@ Call **CrossFilePicker.Current** from any platform or .NET Standard project to g
     {
         System.Console.WriteLine("Exception choosing file: " + ex.ToString());
     }
+### Example MultiPicking 
+    /// <summary>
+    /// Returns null if no files were selected
+    /// </summary>
+    public List<string> GetListOfSelectedFiles(Action<string> errorAction = null)
+    {
+        var fileData = Plugin.FilePicker.CrossFilePicker.Current.PickFile();
+        if (fileData == null)
+            return null; // user canceled file picking
+        fileData.Wait(); // await is not awailable in .Net Framework 4.0 IDEs
+        // Returns List<string> of selected filenames
+        // single fileData.Result.FileName is still valid with multiselect
+        return fileData.Result.FileNames;
+    }
 
 ### Methods
 

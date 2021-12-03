@@ -27,6 +27,7 @@ namespace Plugin.FilePicker
         {
             Microsoft.Win32.OpenFileDialog picker = new Microsoft.Win32.OpenFileDialog();
             picker.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            picker.Multiselect = true;
 
             if (allowedTypes != null)
             {
