@@ -180,7 +180,7 @@ namespace Plugin.FilePicker.Abstractions
             }
 
             _isDisposed = true;
-            _dispose?.Invoke(disposing);
+            if(_dispose != null) _dispose.Invoke(disposing);
         }
 
         /// <summary>

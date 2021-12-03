@@ -12,8 +12,8 @@ namespace Plugin.FilePicker
     public class FilePickerImplementation : IFilePicker
     {
         /// <summary>
-        /// File picker implementation for WPF; uses the Win32 OpenFileDialog from
-        /// PresentationFoundation reference assembly.
+        /// File picker implementation for WPF; uses the OpenFileDialog from
+        /// System.Windows.Forms reference assembly.
         /// </summary>
         /// <param name="allowedTypes">
         /// Specifies one or multiple allowed types. When null, all file types
@@ -52,23 +52,24 @@ namespace Plugin.FilePicker
         /// </summary>
         /// <param name="fileToSave">picked file data for file to save</param>
         /// <returns>true when file was saved successfully, false when not</returns>
-        public async Task<bool> SaveFile(FileData fileToSave)
+        public Task<bool> SaveFile(FileData fileToSave)
         {
             try
             {
+                Task result;
                 using (FileStream sourceStream =
                     new FileStream(fileToSave.FilePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 4096, useAsync: true))
                 {
-                    Task result = Task.Factory.StartNew(() => sourceStream.Write(fileToSave.DataArray, 0, fileToSave.DataArray.Length));
+                    result = Task.Factory.StartNew(() => sourceStream.Write(fileToSave.DataArray, 0, fileToSave.DataArray.Length));
                     result.Wait();
                 }
 
-                return true;
+                return Task.Factory.StartNew(() => true);
             }
             catch (Exception)
             {
                 // ignore exception
-                return false;
+                return Task.Factory.StartNew(() => false);
             }
         }
 
@@ -96,13 +97,13 @@ namespace Plugin.FilePicker
         /// picked file is saved to a local folder before opening.
         /// </summary>
         /// <param name="fileToOpen">picked file data</param>
-        public async void OpenFile(FileData fileToOpen)
+        public void OpenFile(FileData fileToOpen)
         {
             try
             {
                 if (!File.Exists(fileToOpen.FileName))
                 {
-                    SaveFile(fileToOpen).Wait();
+                    SaveFile(fileToOpen);
                 }
 
                 Process.Start(fileToOpen.FileName);

@@ -117,6 +117,7 @@
     <Reference Include="PresentationFramework" />
 	<Reference Include="System.Windows.Forms" />
 	<PackageReference Include="Microsoft.Bcl.Async" Version="1.0.168" />
+    <PackageReference Remove="runtime.any.System.Threading.Tasks"> </PackageReference>
   </ItemGroup>
 	
   <ItemGroup Condition=" $(TargetFramework.StartsWith('net45')) ">
