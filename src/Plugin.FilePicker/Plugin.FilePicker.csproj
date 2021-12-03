@@ -58,6 +58,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <!-- Only for VS2010 - net40 project -->
+    <Compile Remove="Properties\AssemblyInfo.cs" />
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
