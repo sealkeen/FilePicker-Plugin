@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Plugin.FilePicker
 {
@@ -42,6 +43,14 @@ namespace Plugin.FilePicker
             var fileName = Path.GetFileName(picker.FileName);
 
             var data = new FileData(picker.FileName, fileName, () => File.OpenRead(picker.FileName), (x) => { });
+            if (picker.FileNames.Length > 1)
+            {
+                data.FileNames = new List<string>();
+                foreach (var filename in picker.FileNames)
+                {
+                    data.FileNames.Add(filename);
+                }
+            }
 
             return Task.FromResult(data);
         }
