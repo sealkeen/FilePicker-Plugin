@@ -36,7 +36,7 @@ namespace Plugin.FilePicker
 
             var result = picker.ShowDialog();
 
-            if (result == System.Windows.Forms.DialogResult.OK)
+            if (result != System.Windows.Forms.DialogResult.OK)
             {
                 FileData fd = null;
                 return Task.Factory.StartNew(() => fd);
@@ -46,7 +46,7 @@ namespace Plugin.FilePicker
 
             var data = new FileData(picker.FileName, fileName, () => File.OpenRead(picker.FileName), (x) => { });
 
-            if (picker.FileNames.Length > 1)
+            if (picker.FileNames.Length > 0)
             {
                 data.FileNames = new List<string>();
                 foreach (var filename in picker.FileNames)

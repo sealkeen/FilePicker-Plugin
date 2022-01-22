@@ -44,7 +44,7 @@ namespace Plugin.FilePicker
             var fileName = Path.GetFileName(picker.FileName);
 
             var data = new FileData(picker.FileName, fileName, () => File.OpenRead(picker.FileName), (x) => { });
-            if (picker.FileNames.Length > 1)
+            if (picker.FileNames.Length > 0)
             {
                 data.FileNames = new List<string>();
                 foreach (var filename in picker.FileNames)
